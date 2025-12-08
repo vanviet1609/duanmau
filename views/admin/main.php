@@ -22,7 +22,7 @@
                 <a class="nav-link text-uppercase" href="<?= BASE_URL_ADMIN ?>"><b>Home</b></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-uppercase" href=""><b>Thống kê</b></a>
+                <a class="nav-link text-uppercase" href="<?= BASE_URL_ADMIN . '&action=statistic' ?>"><b>Thống kê</b></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-uppercase" href="<?= BASE_URL_ADMIN . '&action=list-category' ?>"><b>Quản lý danh mục</b></a>
@@ -35,6 +35,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-uppercase" href="<?= BASE_URL_ADMIN . '&action=list-user' ?>"><b>Quản lý người dùng</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-uppercase" href="<?= BASE_URL_ADMIN . '&action=banner' ?>"><b>Quản lý banner</b></a>
             </li>
         </ul>
     </nav>

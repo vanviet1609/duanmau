@@ -45,4 +45,72 @@ class Product extends BaseModel
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
     }
+    
+    public function top4Lastest(){
+        $sql = "SELECT * 
+        FROM `products`
+        ORDER BY ID DESC LIMIT 4";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function topView($number){
+        $sql = "SELECT * 
+        FROM `products`
+        ORDER BY view_count DESC LIMIT $number";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function updateView($view_count,$id){
+        $sql = "UPDATE `products` 
+        SET `view_count` = $view_count 
+        WHERE `products`.`id` = $id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+    }
+
+    public function update($data,$id){
+        $sql = "UPDATE `products` 
+        SET 
+        `category_id` = '".$data['category_id']."',
+        `name` = '".$data['name']."',
+        `description` = '".$data['description']."',
+        `price` = '".$data['price']."',
+        `quantity` = '".$data['quantity']."',
+        `img` = '".$data['image']."'
+        WHERE `products`.`id` = $id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+    }
+
+    public function findByCate($id){
+        $sql = "SELECT * 
+        FROM `products`
+        WHERE category_id = $id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function search($key){
+        $sql = "SELECT * FROM `products` WHERE `name` LIKE '%".$key."%'";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getOtherProduct($cate,$id)
+    {
+        $sql = "SELECT * 
+        FROM `products`
+        WHERE category_id = $cate
+        AND id != $id
+        LIMIT 4";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

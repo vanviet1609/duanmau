@@ -1,4 +1,4 @@
-<a href="<?= BASE_URL_ADMIN . '&action=create-product' ?>" class="btn btn-success">Them san pham</a>
+<a href="<?= BASE_URL_ADMIN . '&action=create-product' ?>" class="btn btn-success w-auto">Them san pham</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -25,8 +25,8 @@
                 <td><?= $prd['price'] ?></td>
                 <td><?= $prd['quantity'] ?></td>
                 <td>
-                    <a href="<?= BASE_URL_ADMIN . '&action=show-product' . $prd['id'] ?>" class="btn btn-primary">Xem</a>
-                    <a href="<?= BASE_URL_ADMIN . '&action=edit-product' . $prd['id'] ?>" class="btn btn-warning">Sửa</a>
+                    <a href="<?= BASE_URL_ADMIN . '&action=show-product&id=' . $prd['id'] ?>" class="btn btn-primary">Xem</a>
+                    <a href="<?= BASE_URL_ADMIN . '&action=edit-product&id=' . $prd['id'] ?>" class="btn btn-warning">Sửa</a>
                     <a href="<?= BASE_URL_ADMIN . '&action=delete-product&id=' . $prd['id'] ?>"
                         class="btn btn-danger"
                         onclick="return confirm('Xac nhan xoa ?')">

@@ -37,7 +37,8 @@ class ProductController
             $prd = $this->productModel->find($id);
             if ($prd) {
                 $this->productModel->delete($id);
-                
+                header('Location:' . BASE_URL_ADMIN . '&action=list-product');
+                exit();
             } else {
                 throw new Exception("Khong tim thay san pham voi id: $id");
             }
@@ -45,8 +46,9 @@ class ProductController
             throw new Exception("Thao tac khong thanh cong $ex");
         }
     }
-    
-    public function create(){
+
+    public function create()
+    {
         $view = 'product/create';
         $title = 'Tao moi san pham';
         $categories = $this->cateModel->getAll();
@@ -54,20 +56,61 @@ class ProductController
         require_once PATH_VIEW_MAIN_ADMIN;
     }
 
-    public function store()  {
-        try{
+    public function edit()
+    {
+        $view = 'product/edit';
+        $title = 'Cập nhật sản phẩm';
+        $prd = $this->productModel->find($_GET['id']);
+        $categories = $this->cateModel->getAll();
+
+        require_once PATH_VIEW_MAIN_ADMIN;
+    }
+
+    public function show()
+    {
+        $view = 'product/show';
+        $title = 'Chi tiết sản phẩm';
+        $prd = $this->productModel->find($_GET['id']);
+        $categories = $this->cateModel->getAll();
+
+        require_once PATH_VIEW_MAIN_ADMIN;
+    }
+
+    public function store()
+    {
+        try {
             $data = $_POST + $_FILES;
-            
-            if($data['image']['size']>0){
-                $data['image'] = upload_file('products',$data['image']);
-            }else{
+
+            if ($data['image']['size'] > 0) {
+                $data['image'] = upload_file('products', $data['image']);
+            } else {
                 $data['image'] = null;
             }
             $this->productModel->insert($data);
-        }catch(Exception $ex){
+        } catch (Exception $ex) {
             throw new Exception("Thao tac khong thanh cong $ex");
         }
-        header('Location:'. BASE_URL_ADMIN . '&action=create-product');
+        header('Location:' . BASE_URL_ADMIN . '&action=create-product');
+        exit();
+    }
+
+    public function update()
+    {   
+        $prd = $this->productModel->find($_GET['id']);
+        try {
+            $data = $_POST + $_FILES;
+            
+            if ($data['image']['size'] > 0) {
+                $data['image'] = upload_file('products', $data['image']);
+                unlink(PATH_ASSETS_UPLOADS.$prd['img']);
+            } else {
+                $data['image'] = $prd['img'];
+            }
+            $this->productModel->update($data,$_GET['id']);
+        } catch (Exception $ex) {
+            throw new Exception("Thao tac khong thanh cong $ex");
+        }
+        header('Location:' . BASE_URL_ADMIN . '&action=list-product');
         exit();
     }
 }
