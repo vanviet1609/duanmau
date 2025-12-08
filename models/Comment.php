@@ -15,4 +15,17 @@ class Comment extends BaseModel
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function getCommentByPrd($uid){
+        $sql = "SELECT c.*, u.username user_name ,p.name prd_name
+        FROM `comments` as c
+        JOIN users as u
+        ON c.user_id = $uid
+        JOIN products as p
+        ON c.product_id = p.id
+        ORDER BY c.id DESC;";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
